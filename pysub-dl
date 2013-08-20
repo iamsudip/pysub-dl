@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+
+import shutil
+import argparse
+import sys
+import requests
+try:
+    from BeautifulSoup import BeautifulSoup
+except ImportError:
+    print '''Dependency not installed. Don't worry working on it\n'''
+    import commands
+    commands.getoutput('pip install BeautifulSoup')
+    from BeautifulSoup import BeautifulSoup
+
+parser = argparse.ArgumentParser(description = 'Searches and downloads subtitle for your movie')
+parser.add_argument("movie", type = str,
+                    help = "Path to file")
+parser.add_argument("language", type = str,
+                    help = "Subtitle language")
+args = parser.parse_args()
+
+def make_link(movie_name, lang):
+    return 'http://subscene.com/subtitles/%s/%s' %(movie_name, lang)
+
+def search_sub(link):
+    data = requests.get(link)
+    soup = BeautifulSoup(data.text)
+    del data
+    for subs in soup.findAll('td', attrs={'class' : 'a1'}):
+        for link in subs.findAll('a'):
+            down_sub2('http://subscene.com' + link.get('href'))
+
+
+def down_sub2(link):
+    data = requests.get(link)
+    soup = BeautifulSoup(data.text)
+    del data
+    for subs in soup.findAll('div', attrs={'class' : 'download'}):
+        for link in subs.findAll('a'):
+            download_file('http://subscene.com' + link.get('href'))
+
+def download_file(url):
+    response = requests.get(url, stream=True)
+    with open('%s.zip' % args.movie, 'wb') as out_file:
+        shutil.copyfileobj(response.raw, out_file)
+    del response
+    choice = raw_input('Was that appropriate? ')
+    if 'y' in choice:
+        sys.exit(0)
+
+if __name__ == '__main__':
+    link = make_link(args.movie, args.language)
+    search_sub(link)
