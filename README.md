@@ -10,16 +10,22 @@ I know there is many work to do. It is first release so you can understand.
 Installation
 ------------
 
-Nothing is needed now. Only one dependency is there like BeautifulSoup, but don't worry it's a standalone script.
+First I will say it is first releas so if you want to try try it in a virtual environment.
 
-It will automatically download the dependency if not present. Still i haven't made any setup.py so I the installation of dependency also merged in this script so I called it 'standalone script'. Btw, Hang tight, will update it soon.
+To install the script:
 
-So, you manually don't have to install anything.
+$ python setup.py install
 
 How to use
 ----------
 
 Use it like: pysub-dl [moviename] [language]
+
+For help:
+
+$ pysub-dl -h
+
+General usage:
 
 $ pysub-dl iron-man english
 
