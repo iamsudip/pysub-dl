@@ -29,6 +29,6 @@ General usage:
 
 $ pysub-dl iron-man english
 
-$ pysun-dl hitman english
+$ pysub-dl hitman english
 
 One request: Do not use space in the movie name, Use '-' instead of ' '
