@@ -3,14 +3,6 @@
 import shutil
 import argparse
 import sys
-import requests
-try:
-    from BeautifulSoup import BeautifulSoup
-except ImportError:
-    print '''Dependency not installed. Don't worry working on it\n'''
-    import commands
-    commands.getoutput('pip install BeautifulSoup')
-    from BeautifulSoup import BeautifulSoup
 
 parser = argparse.ArgumentParser(description = 'Searches and downloads subtitle for your movie')
 parser.add_argument("movie", type = str,
