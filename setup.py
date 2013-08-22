@@ -18,7 +18,7 @@ except ImportError:
     requirements.append('requests')
 
 setup(name = 'pysub-dl',
-    version = '0.1',
+    version = '0.1.2',
     description = "A script to download subtitles",
     long_description = "A script to download subtitles",
     platforms = ["Linux"],
@@ -32,5 +32,5 @@ setup(name = 'pysub-dl',
                         'https://pypi.python.org/pypi/BeautifulSoup/3.2.1'
 ],
     include_package_data = True,
-    scripts = ['pysub-dl']
+    scripts = ['pysub-dl', 'download_it.py', 'prompt_user.py']
     )
