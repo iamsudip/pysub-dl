@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-import shutil
 import argparse
 import sys
 import requests
 from BeautifulSoup import BeautifulSoup
+from download_it import download_file
 
 parser = argparse.ArgumentParser(description = 'Searches and downloads subtitle for your movie')
 parser.add_argument("movie", type = str,
@@ -14,40 +14,34 @@ parser.add_argument("language", type = str,
 args = parser.parse_args()
 
 def make_link(movie_name, lang):
-''' Returns url which contains all subtitles of a particular movie.
-'''
+    ''' Returns url which contains all subtitles of a particular movie.
+    '''
     return 'http://subscene.com/subtitles/%s/%s' %(movie_name, lang)
 
 def search_sub(link):
-''' Fuction to find all subtitle links.
-'''
+    ''' Fuction to find all subtitle links.
+    '''
     data = requests.get(link)
     soup = BeautifulSoup(data.text)
     del data
     for subs in soup.findAll('td', attrs={'class' : 'a1'}):
         for link in subs.findAll('a'):
-            down_sub2('http://subscene.com' + link.get('href'))
+            down_link('http://subscene.com' + link.get('href'))
 
-def down_sub2(link):
-''' Returns the download link to a particular subtitle.
-'''
+def down_link(link):
+    ''' Returns the download link to a particular subtitle.
+    '''
     data = requests.get(link)
     soup = BeautifulSoup(data.text)
     del data
     for subs in soup.findAll('div', attrs={'class' : 'download'}):
         for link in subs.findAll('a'):
-            download_file('http://subscene.com' + link.get('href'))
-
-def download_file(url):
-''' Downloads the File provided by subscene.
-'''
-    response = requests.get(url, stream=True)
-    with open('%s.zip' % args.movie, 'wb') as out_file:
-        shutil.copyfileobj(response.raw, out_file)
-    del response
-    choice = raw_input('Was that appropriate? ')
-    if 'y' in choice:
+            user_response = download_file('http://subscene.com' + link.get('href'))
+    if 'y' in user_response:
+        print "Cool. Enjoy the movie!"
         sys.exit(0)
+    else:
+        print "Downloading another one. Hang tight!"
 
 if __name__ == '__main__':
     link = make_link(args.movie, args.language)
