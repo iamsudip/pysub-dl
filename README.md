@@ -1,4 +1,3 @@
-
 ========
 pysub-dl
 ========
@@ -7,7 +6,7 @@ Movie subtitle downloader
 
 Actually now it only supports subscene.com to download the subtitles.
 
-I know there is many work to do. It is first release so you can understand.
+I know there is many work to do. It is an early release but works well.
 
 Installation
 ------------
