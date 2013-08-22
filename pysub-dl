@@ -14,9 +14,13 @@ parser.add_argument("language", type = str,
 args = parser.parse_args()
 
 def make_link(movie_name, lang):
+''' Returns url which contains all subtitles of a particular movie.
+'''
     return 'http://subscene.com/subtitles/%s/%s' %(movie_name, lang)
 
 def search_sub(link):
+''' Fuction to find all subtitle links.
+'''
     data = requests.get(link)
     soup = BeautifulSoup(data.text)
     del data
@@ -24,8 +28,9 @@ def search_sub(link):
         for link in subs.findAll('a'):
             down_sub2('http://subscene.com' + link.get('href'))
 
-
 def down_sub2(link):
+''' Returns the download link to a particular subtitle.
+'''
     data = requests.get(link)
     soup = BeautifulSoup(data.text)
     del data
@@ -34,6 +39,8 @@ def down_sub2(link):
             download_file('http://subscene.com' + link.get('href'))
 
 def download_file(url):
+''' Downloads the File provided by subscene.
+'''
     response = requests.get(url, stream=True)
     with open('%s.zip' % args.movie, 'wb') as out_file:
         shutil.copyfileobj(response.raw, out_file)
