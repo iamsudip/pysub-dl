@@ -5,6 +5,7 @@ import sys
 import requests
 from BeautifulSoup import BeautifulSoup
 from download_it import download_file
+from prompt_user import prompt_again as prompt
 
 parser = argparse.ArgumentParser(description = 'Searches and downloads subtitle for your movie')
 parser.add_argument("movie", type = str,
@@ -13,27 +14,14 @@ parser.add_argument("language", type = str,
                     help = "Subtitle language")
 args = parser.parse_args()
 
-def make_link(movie_name, lang):
-    ''' Returns url which contains all subtitles of a particular movie.
-    '''
-    return 'http://subscene.com/subtitles/%s/%s' %(movie_name, lang)
-
-def search_sub(link):
-    ''' Fuction to find all subtitle links.
-    '''
-    data = requests.get(link)
-    soup = BeautifulSoup(data.text)
-    del data
-    for subs in soup.findAll('td', attrs={'class' : 'a1'}):
-        for link in subs.findAll('a'):
-            down_link('http://subscene.com' + link.get('href'))
+data = {}        # Dictionary to keep all data including links and name of the subtitle
 
 def down_link(link):
     ''' Returns the download link to a particular subtitle.
     '''
-    data = requests.get(link)
-    soup = BeautifulSoup(data.text)
-    del data
+    response = requests.get(link)
+    soup = BeautifulSoup(response.text)
+    del response
     for subs in soup.findAll('div', attrs={'class' : 'download'}):
         for link in subs.findAll('a'):
             user_response = download_file('http://subscene.com' + link.get('href'))
@@ -41,8 +29,42 @@ def down_link(link):
         print "Cool. Enjoy the movie!"
         sys.exit(0)
     else:
-        print "Downloading another one. Hang tight!"
+        print "Choose another one subtitle"
+        choice = prompt()
+        down_link(data[int(choice)])
+
+def make_link(movie_name, lang):
+    ''' Returns url which contains all subtitles of a particular movie.
+    '''
+    return 'http://subscene.com/subtitles/%s/%s' %(movie_name, lang)
+
+def search_sub(link):
+    response = requests.get(link)
+    if not response.status_code == 200:
+        print "Sorry! Either no subtitle available right now or please provide movie name correctly."
+        sys.exit(1)
+    soup = BeautifulSoup(response.text)
+    del response
+    counter1 = 1
+    counter2 = 1
+    for subs in soup.findAll('td', attrs={'class' : 'a1'}):
+        for link in subs.findAll('a'):
+            data[counter1] = 'http://subscene.com' + link.get('href')
+            counter1 += 1
+    print "List of subtitles available at subscene.com"
+    for subs in soup.findAll('td', attrs={'class' : 'a1'}):
+        print str(counter2) + ". Language:",
+        for movie_name in subs.findAll('span'):
+            print movie_name.text
+        counter2 += 1
+    return prompt()
 
 if __name__ == '__main__':
     link = make_link(args.movie, args.language)
-    search_sub(link)
+    choice = search_sub(link)
+    try:
+        down_link(data[int(choice)])
+    except KeyError:
+        print "You entered wrong choice"
+        choice = prompt()
+        down_link(data[int(choice)])
