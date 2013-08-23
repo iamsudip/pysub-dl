@@ -1,4 +1,4 @@
 include *.py
-include README.md
+include README
 include pysub-dl
 include LICENSE
