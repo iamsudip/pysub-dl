@@ -3,5 +3,4 @@
 def prompt():
     ''' Returns response from user.
     '''
-    choice = raw_input('Was that appropriate? ')
-    return choice
+    return raw_input('Was that appropriate? ')
