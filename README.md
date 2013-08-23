@@ -8,8 +8,6 @@ Actually now it only supports subscene.com to download the subtitles.
 
 I know there is many work to do. It is an early release but works well.
 
-First you should go to your movie directory then you should execute your code, it will be better cause **execution creates the subtitle zip in the present working directory** but it is not mandatory.
-
 Installation
 ------------
 
@@ -47,3 +45,8 @@ General usage
     $ pysub-dl hitman english
 
 One request: **Do not use space in the movie name, Use '-'(hyphen) instead of ' '(white space).** Movie name is not case sensitive, so all you have to worry about the space only.
+
+First you should go to your movie directory then you should execute your code, it will be better cause **execution creates the subtitle zip in the present working directory** but it is not mandatory.
+
+On execution **it will show the list of subtitles available at the moment at subscene.com** for that particular movie. You have to choose one number from them.
+
