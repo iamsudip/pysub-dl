@@ -8,7 +8,7 @@ def download_file(url):
     ''' Downloads the File.
     '''
     response = requests.get(url, stream = True)
-    with open('srt.zip', 'wb') as out_file:
+    with open('subtitle.zip', 'wb') as out_file:
         shutil.copyfileobj(response.raw, out_file)
     del response
     return prompt()
