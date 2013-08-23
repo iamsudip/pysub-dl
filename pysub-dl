@@ -16,6 +16,16 @@ args = parser.parse_args()
 
 data = {}        # Dictionary to keep all data including links and name of the subtitle
 
+def handle_choice(choice):
+    ''' Error handling due to wrong user input
+    '''
+    try:
+        down_link(data[int(choice)])
+    except KeyError:
+        print "You entered wrong choice"
+        choice = prompt()
+        down_link(data[int(choice)])
+
 def down_link(link):
     ''' Returns the download link to a particular subtitle.
     '''
@@ -31,7 +41,7 @@ def down_link(link):
     else:
         print "Choose another one subtitle"
         choice = prompt()
-        down_link(data[int(choice)])
+        handle_choice(choice)
 
 def make_link(movie_name, lang):
     ''' Returns url which contains all subtitles of a particular movie.
@@ -39,6 +49,8 @@ def make_link(movie_name, lang):
     return 'http://subscene.com/subtitles/%s/%s' %(movie_name, lang)
 
 def search_sub(link):
+    ''' After searching and saving the subtitle list returns the user choice.
+    '''
     response = requests.get(link)
     if not response.status_code == 200:
         print "Sorry! Either no subtitle available right now or please provide movie name correctly."
@@ -62,9 +74,4 @@ def search_sub(link):
 if __name__ == '__main__':
     link = make_link(args.movie, args.language)
     choice = search_sub(link)
-    try:
-        down_link(data[int(choice)])
-    except KeyError:
-        print "You entered wrong choice"
-        choice = prompt()
-        down_link(data[int(choice)])
+    handle_choice(choice)
