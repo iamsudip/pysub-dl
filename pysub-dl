@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+__appname__ = "pysub-dl"
+__version__ = "0.1.5"
+__author__ = "iamsudip <iamsudip@programmer.net>"
+__license__ = "MIT"
+
 import argparse
 import sys
 import requests
@@ -22,9 +27,13 @@ def handle_choice(choice):
     try:
         down_link(data[int(choice)])
     except KeyError:
-        print "You entered wrong choice"
+        print "Use the index number respective to your desired subtitle. You entered wrong choice"
         choice = prompt()
-        down_link(data[int(choice)])
+        handle_choice(choice)
+    except ValueError:
+        print "Use the index number respective to your desired subtitle. You entered wrong choice"
+        choice = prompt()
+        handle_choice(choice)
 
 def down_link(link):
     ''' Returns the download link to a particular subtitle.
