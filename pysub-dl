@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.1.6"
+__version__ = "0.1.7"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
@@ -10,7 +10,7 @@ import sys
 import requests
 from BeautifulSoup import BeautifulSoup
 from download_it import download_file
-from prompt_user import prompt_again as prompt
+from prompt_user import prompt1, prompt2
 
 parser = argparse.ArgumentParser(description = 'Searches and downloads subtitle for your movie')
 parser.add_argument("movie", type = str,
@@ -19,20 +19,48 @@ parser.add_argument("language", type = str,
                     help = "Subtitle language")
 args = parser.parse_args()
 
-data = {}        # Dictionary to keep all data including links and name of the subtitle
+data = {}           # Dictionary to keep all data including links and name of the subtitle.
+movie_list = {}     # Dictionary to keep all movie names and corresponding urls in case of wrong movie input.
+temp = {}           # Temporary dictionary to parse movie_list url correctly
 
+def handle_choice1(choice):
+    ''' Error handling due to wrong user input
+    '''
+    try:
+        search_sub(movie_list[temp[int(choice)]])
+        choice = prompt1()
+        down_link(data[int(choice)])
+    except (KeyError, ValueError) as errors:
+        print "Use the index number respective to your desired subtitle. You entered wrong choice."
+        choice = prompt2()
+        handle_choice1(choice)
+
+def alternate_search():
+    ''' Returns probable movie names corresponding to the user input.
+    '''
+    url = 'http://subscene.com/subtitles/title.aspx?q=' + args.movie
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text)
+    del response
+    counter = 1
+    for popular in soup.findAll('div', attrs={'class' : 'title'}):
+        for link in popular.findAll('a'):
+            movie_list[link.text] = 'http://subscene.com' + link.get('href') + '/' + args.language
+    for key in movie_list.keys():
+        print str(counter) + ". " + key
+        temp[counter] = key
+        counter += 1
+    choice = prompt2()
+    handle_choice1(choice)
+    
 def handle_choice(choice):
     ''' Error handling due to wrong user input
     '''
     try:
         down_link(data[int(choice)])
-    except KeyError:
-        print "Use the index number respective to your desired subtitle. You entered wrong choice"
-        choice = prompt()
-        handle_choice(choice)
-    except ValueError:
-        print "Use the index number respective to your desired subtitle. You entered wrong choice"
-        choice = prompt()
+    except (KeyError, ValueError) as errors:
+        print "Use the index number respective to your desired subtitle. You entered wrong choice."
+        choice = prompt1()
         handle_choice(choice)
 
 def down_link(link):
@@ -49,7 +77,7 @@ def down_link(link):
         sys.exit(0)
     else:
         print "Choose another one subtitle"
-        choice = prompt()
+        choice = prompt1()
         handle_choice(choice)
 
 def make_link(movie_name, lang):
@@ -62,8 +90,8 @@ def search_sub(link):
     '''
     response = requests.get(link)
     if not response.status_code == 200:
-        print "Sorry! Either no subtitle available right now or please provide movie name correctly."
-        sys.exit(1)
+        print "Sorry! Please choose movie name from the list and enter the corresponding index number."
+        alternate_search()
     soup = BeautifulSoup(response.text)
     del response
     counter1 = 1
@@ -78,9 +106,9 @@ def search_sub(link):
         for movie_name in subs.findAll('span'):
             print movie_name.text
         counter2 += 1
-    return prompt()
 
 if __name__ == '__main__':
     link = make_link(args.movie, args.language)
-    choice = search_sub(link)
+    search_sub(link)
+    choice = prompt1()
     handle_choice(choice)
