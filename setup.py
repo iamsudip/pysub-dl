@@ -11,16 +11,15 @@ try:
     import BeautifulSoup
 except ImportError:
     requirements.append('BeautifulSoup')
-
 try:
     import requests
 except ImportError:
     requirements.append('requests')
 
 setup(name = 'pysub-dl',
-    version = '0.1.5',
-    description = "A script to download subtitles",
-    long_description = "A script to download subtitles",
+    version = '0.1.6',
+    description = "Script to download movie subtitles automatically",
+    long_description = "Script to download movie subtitles automatically",
     platforms = ["Linux"],
     author = "iamsudip",
     author_email = "iamsudip@programmer.net",
