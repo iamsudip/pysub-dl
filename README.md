@@ -18,11 +18,11 @@ To install the script do this
 
 Option 1 : Install via pip ::
 
-    $ sudo python setup.py install
+    $ sudo pip install pysub-dl
 
 Option 2 : If you have downloaded the source ::
 
-    $ sudo pip install pysub-dl
+    $ sudo python setup.py install
 
 Do not forget to upgrade it after a week interval I am modifying so many things very frequently ::
 
@@ -50,6 +50,10 @@ First you should go to your movie directory then you should execute your code, i
 On execution **it will show the list of subtitles available at the moment at subscene.com** for that particular movie. You have to choose one number from them.
 
 Uncertainly **if you give wrong movie name, no problem it will show you the probable movie name and you have to choose from them**.
+
+For windows users they should download the package manually and extract it. Run it on that directory as ::
+
+    C:\master> python pysub-dl incredibles english
 
 Reporting Bugs
 --------------
