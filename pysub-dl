@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.1.7"
+__version__ = "0.1.8"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
@@ -108,7 +108,11 @@ def search_sub(link):
         counter2 += 1
 
 if __name__ == '__main__':
-    link = make_link(args.movie, args.language)
-    search_sub(link)
-    choice = prompt1()
-    handle_choice(choice)
+    try:
+        link = make_link(args.movie, args.language)
+        search_sub(link)
+        choice = prompt1()
+        handle_choice(choice)
+    except (KeyboardInterrupt, EOFError) as errors:
+        print '\nExit'
+        sys.exit(0)
