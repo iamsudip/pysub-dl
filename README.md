@@ -55,6 +55,8 @@ For windows users they should download the package manually and extract it. Run 
 
     C:\master> python pysub-dl incredibles english
 
+**Press [Ctrl] + c or [Ctrl] + d to exit immediately.**
+
 Reporting Bugs
 --------------
 
