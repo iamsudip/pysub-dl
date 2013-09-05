@@ -43,6 +43,8 @@ General usage ::
 
     $ pysub-dl hitman spanish
 
+**If you do not provide any language it will show you all the available subtitles for that movie for all languages.**
+
 One request: **Do not use space in the movie name, Use '-'(hyphen) instead of ' '(white space).** Movie name is not case sensitive, so all you have to worry about the space only.
 
 First you should go to your movie directory then you should execute your code, it will be better cause **execution creates the subtitle zip in the present working directory** but it is not mandatory.
