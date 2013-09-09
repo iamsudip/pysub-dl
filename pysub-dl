@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.1.9"
+__version__ = "0.2.0"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
@@ -83,10 +83,16 @@ def down_link(link):
 def make_link(movie_name, lang):
     ''' Returns url which contains all subtitles of a particular movie.
     '''
-    return 'http://subscene.com/subtitles/%s/%s' %(movie_name, lang)
+    link = 'http://subscene.com/subtitles/%s/%s' %(movie_name, lang)
+    response = requests.get(link)
+    if response.status_code == 200:
+        return link
+    else:
+        print "Wrong language input, Showing result for all available language"
+        return 'http://subscene.com/subtitles/%s/' %(movie_name)
 
 def search_sub(link):
-    ''' After searching and saving the subtitle list returns the user choice.
+    ''' After searching and shows the subtitle list.
     '''
     response = requests.get(link)
     if not response.status_code == 200:
