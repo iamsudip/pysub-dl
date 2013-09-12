@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
@@ -22,18 +22,6 @@ args = parser.parse_args()
 data = {}           # Dictionary to keep all data including links and name of the subtitle.
 movie_list = {}     # Dictionary to keep all movie names and corresponding urls in case of wrong movie input.
 temp = {}           # Temporary dictionary to parse movie_list url correctly
-
-def handle_choice1(choice):
-    ''' Error handling due to wrong user input
-    '''
-    try:
-        search_sub(movie_list[temp[int(choice)]])
-        choice = prompt1()
-        down_link(data[int(choice)])
-    except (KeyError, ValueError) as errors:
-        print "Use the index number respective to your desired subtitle. You entered wrong choice."
-        choice = prompt2()
-        handle_choice1(choice)
 
 def handle_choice(choice):
     ''' Error handling due to wrong user input
@@ -60,8 +48,12 @@ def alternate_search():
         print str(counter) + ". " + key
         temp[counter] = key
         counter += 1
-    choice = prompt2()
-    handle_choice1(choice)
+    try:
+        choice = prompt2()
+        search_sub(movie_list[temp[int(choice)]])
+    except (KeyError, ValueError) as errors:
+        choice = prompt2()
+        handle_choice(choice)
 
 def down_link(link):
     ''' Downloads the subtitle & prompts if it is ok or not.
@@ -88,7 +80,7 @@ def make_link(movie_name, lang):
     if response.status_code == 200:
         return link
     else:
-        print "Wrong language input, Showing result for all available language"
+        print "Wrong input, fixing things hang tight"
         return 'http://subscene.com/subtitles/%s/' %(movie_name)
 
 def search_sub(link):
