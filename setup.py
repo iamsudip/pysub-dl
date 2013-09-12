@@ -20,7 +20,7 @@ except ImportError:
     requirements.append('requests')
 
 setup(name = 'pysub-dl',
-    version = '0.2.2',
+    version = '0.2.3',
     description = "Script to download movie subtitles automatically",
     long_description = long_description,
     platforms = ["Linux"],

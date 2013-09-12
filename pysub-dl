@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
@@ -23,8 +23,18 @@ data = {}           # Dictionary to keep all data including links and name of th
 movie_list = {}     # Dictionary to keep all movie names and corresponding urls in case of wrong movie input.
 temp = {}           # Temporary dictionary to parse movie_list url correctly
 
+def alternate_search_choice_handler(choice):
+    ''' Alternate searches user input handler which calls the function to search subtitle for selected movie.
+    '''
+    try:
+        search_sub(movie_list[temp[int(choice)]])
+        choice = prompt1()
+        handle_choice(choice)
+    except (KeyError, ValueError) as errors:
+        alternate_search_choice_handler(prompt2())
+
 def handle_choice(choice):
-    ''' Error handling due to wrong user input
+    ''' Error handling due to wrong user input.
     '''
     try:
         down_link(data[int(choice)])
@@ -48,12 +58,7 @@ def alternate_search():
         print str(counter) + ". " + key
         temp[counter] = key
         counter += 1
-    try:
-        choice = prompt2()
-        search_sub(movie_list[temp[int(choice)]])
-    except (KeyError, ValueError) as errors:
-        choice = prompt2()
-        handle_choice(choice)
+    alternate_search_choice_handler(prompt2())
 
 def down_link(link):
     ''' Downloads the subtitle & prompts if it is ok or not.
