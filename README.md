@@ -12,7 +12,7 @@ It is an early release but works well. So, do not forget to upgrade it frequentl
 Installation
 ------------
 
-Now it is a stable release so if you want to install it in your system you can do it else try it in a virtual environment. To install it in yur system it requires su access.
+Now it is a stable release so if you want to install it in your system it requires su/superuser access.
 
 To install the script do this
 
@@ -31,7 +31,9 @@ Do not forget to upgrade it after a week interval I am modifying so many things 
 How to use
 ----------
 
-Use it like: pysub-dl [moviename] [language]
+Use it like: pysub-dl movie [language]
+
+[language] is optional. if provide language you will see subtitles available for that language only or it will show you all.
 
 For help ::
 
@@ -45,7 +47,9 @@ General usage ::
 
 **If you do not provide any language it will show you all the available subtitles for that movie for all languages.**
 
-One request: **Do not use space in the movie name, Use '-'(hyphen) instead of ' '(white space).** Movie name is not case sensitive, so all you have to worry about the space only.
+One request: **Do not use space in the movie name, Use '-'(hyphen) instead of ' '(white space).** Movie name is not case sensitive, so all you have to worry about the space only or **if you want to use special characters like ' you can use double quotes** i. e. ::
+
+    $ pysub-dl "we're the millers"
 
 First you should go to your movie directory then you should execute your code, it will be better cause **execution creates the subtitle zip in the present working directory** but it is not mandatory.
 
