@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
@@ -25,6 +25,9 @@ temp = {}           # Temporary dictionary to parse movie_list url correctly
 
 def alternate_search_choice_handler(choice):
     ''' Alternate searches user input handler which calls the function to search subtitle for selected movie.
+
+       :kwarg choice: The choice which user returned after alternate movie selection.
+
     '''
     try:
         search_sub(movie_list[temp[int(choice)]])
@@ -33,8 +36,14 @@ def alternate_search_choice_handler(choice):
     except (KeyError, ValueError) as errors:
         alternate_search_choice_handler(prompt2())
 
+
 def handle_choice(choice):
     ''' Error handling due to wrong user input.
+
+       :kwarg choice: It holds the user choice sent by various calling funtions.
+
+        If no error occurs it calls the function scrap the download page according to user choice.
+
     '''
     try:
         down_link(data[int(choice)])
@@ -43,8 +52,10 @@ def handle_choice(choice):
         choice = prompt1()
         handle_choice(choice)
 
+
 def alternate_search():
-    ''' Returns probable movie names corresponding to the user input.
+    ''' Prints a list for probable movie names corresponding to the movie name input in case of movie name mismatch.
+
     '''
     url = 'http://subscene.com/subtitles/title.aspx?q=' + args.movie
     response = requests.get(url)
@@ -60,8 +71,12 @@ def alternate_search():
         counter += 1
     alternate_search_choice_handler(prompt2())
 
+
 def down_link(link):
     ''' Downloads the subtitle & prompts if it is ok or not.
+
+       :kwarg link: It holds the download page link of a particular subtitle.
+
     '''
     response = requests.get(link)
     soup = BeautifulSoup(response.text)
@@ -77,10 +92,89 @@ def down_link(link):
         choice = prompt1()
         handle_choice(choice)
 
-def make_link(movie_name, lang):
+
+def make_link(movie_name, language=None):
     ''' Returns url which contains all subtitles of a particular movie.
+
+       :kwarg movie_name: The user input for the movie name. Valid values are:
+        * "movie name": The movie name inside double quote.
+                        As one can see user can use blank space inside quotes.
+                        It is very preferable way to use. One can write whatever he/she wants inside double quotes.
+
+        * movie-name: If the movie name do not contains any special character,
+                      one can also use this type of input, but here is a restriction
+                      that user can not use blank spacehere. They should use hyphen(-) instead of blank spaces.
+
+       :kwarg language: The user input for his/her choice of subtitle language. Valid values are:
+        * Arabic
+        * Brazillian-Portuguese
+        * Danish
+        * Dutch
+        * English
+        * Farsi_Persian
+        * French
+        * Indonesian
+        * Italian
+        * Norwegian
+        * Spanish
+        * Swedish
+        * Vietnamese
+                         Other valid values are in alphabatical order:
+        * Albanian
+        * Azerbaijani
+        * Bengali
+        * Big_5_code
+        * Bosnian
+        * Bulgarian
+        * Bulgarian-English
+        * Burmese
+        * Catalan
+        * Chinese_BG_code
+        * Croatian
+        * Czech
+        * Dutch-English
+        * English-German
+        * Esperanto
+        * Estonian
+        * Finnish
+        * German
+        * Greek
+        * Greenlandic
+        * Hebrew
+        * Hindi
+        * Hungarian
+        * Hungarian_English
+        * Icelandic
+        * Japanese
+        * Korean
+        * Kurdish
+        * Latvian
+        * Lithuanian
+        * Macedonian
+        * Malay
+        * Polish
+        * Portuguese
+        * Romanian
+        * Russian
+        * Serbian
+        * Sinhala
+        * Slovak
+        * Slovenian
+        * Tagalog
+        * Tamil
+        * Thai
+        * Turkish
+        * Ukranian
+        * Urdu
+
+        If language input is ok then it returns the url to use the user provided language all over the program.
+        If any error occurs i. e.
+        * user made a wrong spelling of the language
+          or
+        * subtitle in desired language is not available, then it returns the url using the movie name only.
+
     '''
-    link = 'http://subscene.com/subtitles/%s/%s' %(movie_name, lang)
+    link = 'http://subscene.com/subtitles/%s/%s' %(movie_name, language)
     response = requests.get(link)
     if response.status_code == 200:
         return link
@@ -88,8 +182,12 @@ def make_link(movie_name, lang):
         print "Wrong input, fixing things hang tight"
         return 'http://subscene.com/subtitles/%s/' %(movie_name)
 
+
 def search_sub(link):
     ''' After searching shows the subtitle list.
+
+       :kwarg link: It holds the url sent by calling funtion.
+
     '''
     response = requests.get(link)
     if not response.status_code == 200:
@@ -109,6 +207,7 @@ def search_sub(link):
         for movie_name in subs.findAll('span'):
             print movie_name.text
         counter2 += 1
+
 
 if __name__ == '__main__':
     try:
