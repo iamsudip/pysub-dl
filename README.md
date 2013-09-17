@@ -33,7 +33,7 @@ How to use
 
 Use it like: pysub-dl movie [language]
 
-[language] is optional. if provide language you will see subtitles available for that language only or it will show you all.
+[language] is optional, if language is provided you will see subtitles available for that language only or it will show you all.
 
 For help ::
 
