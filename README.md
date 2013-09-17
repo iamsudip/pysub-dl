@@ -51,7 +51,7 @@ One request: **Do not use space in the movie name, Use '-'(hyphen) instead of ' 
 
     $ pysub-dl "we're the millers"
 
-First you should go to your movie directory then you should execute your code, it will be better cause **execution creates the subtitle zip in the present working directory** but it is not mandatory.
+First you should go to your movie directory then you should execute your code, it will be better cause **execution downloads the subtitle file(s) in the present working directory** but it is not mandatory.
 
 On execution **it will show the list of subtitles available at the moment at subscene.com** for that particular movie. You have to choose one number from them.
 
