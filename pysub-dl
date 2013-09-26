@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.2.5"
+__version__ = "0.2.6"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
@@ -11,13 +11,6 @@ import requests
 from BeautifulSoup import BeautifulSoup
 from download_it import download_file
 from prompt_user import prompt1, prompt2
-
-parser = argparse.ArgumentParser(description = 'Searches and downloads subtitle for your movie')
-parser.add_argument("movie", type = str,
-                    help = "Name of the movie")
-parser.add_argument("language", type = str, nargs='?',
-                    default='', help = "Subtitle language")
-args = parser.parse_args()
 
 data = {}           # Dictionary to keep all data including links and name of the subtitle.
 movie_list = {}     # Dictionary to keep all movie names and corresponding urls in case of wrong movie input.
@@ -210,6 +203,14 @@ def search_sub(link):
 
 
 if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(description = 'Searches and downloads subtitle for your movie')
+    parser.add_argument("movie", type = str,
+                    help = "Name of the movie")
+    parser.add_argument("language", type = str, nargs='?',
+                    default='', help = "Subtitle language")
+    args = parser.parse_args()
+
     try:
         link = make_link(args.movie, args.language)
         search_sub(link)
