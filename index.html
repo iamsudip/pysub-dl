@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Pysub-dl by iamsudip</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Pysub-dl</h1>
+        <h2>Movie subtitle downloader - subscene.com scrapper</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/iamsudip/pysub-dl/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/iamsudip/pysub-dl/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/iamsudip/pysub-dl" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1></h1>
+
+<h1>
+<a name="pysub-dl-v026" class="anchor" href="#pysub-dl-v026"><span class="octicon octicon-link"></span></a>pysub-dl v0.2.6</h1>
+
+<h2>
+<a name="subtitle-downloader" class="anchor" href="#subtitle-downloader"><span class="octicon octicon-link"></span></a>Subtitle downloader</h2>
+
+<p>Actually now it only supports subscene.com to download the subtitles.</p>
+
+<p>It is an early release but works well. So, do not forget to upgrade it frequently.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Now it is a stable release so if you want to install it in your system it requires su/superuser access.</p>
+
+<p>To install the script do this</p>
+
+<p>Option 1 : Install via pip ::</p>
+
+<pre><code>$ sudo pip install pysub-dl
+</code></pre>
+
+<p>Option 2 : If you have downloaded the source ::</p>
+
+<pre><code>$ sudo python setup.py install
+</code></pre>
+
+<p>Do not forget to upgrade it after a week interval I am modifying so many things very frequently ::</p>
+
+<pre><code>$ sudo pip install pysub-dl --upgrade
+</code></pre>
+
+<h2>
+<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h2>
+
+<p>Use it like: pysub-dl movie [language]</p>
+
+<p>[language] is optional, if language is provided you will see subtitles available for that language only or it will show you all.</p>
+
+<p>For help ::</p>
+
+<pre><code>$ pysub-dl --help
+</code></pre>
+
+<p>General usage ::</p>
+
+<pre><code>$ pysub-dl iron-man english
+
+$ pysub-dl hitman spanish
+</code></pre>
+
+<p><strong>If you do not provide any language it will show you all the available subtitles for that movie for all languages.</strong></p>
+
+<p>One request: <strong>Do not use space in the movie name, Use '-'(hyphen) instead of ' '(white space).</strong> Movie name is not case sensitive, so all you have to worry about the space only or <strong>if you want to use special characters like ' you can use double quotes</strong> i. e. ::</p>
+
+<pre><code>$ pysub-dl "we're the millers"
+</code></pre>
+
+<p>First you should go to your movie directory then you should execute your code, it will be better cause <strong>execution downloads the subtitle file(s) in the present working directory</strong> but it is not mandatory.</p>
+
+<p>On execution <strong>it will show the list of subtitles available at the moment at subscene.com</strong> for that particular movie. You have to choose one number from them.</p>
+
+<p>Uncertainly <strong>if you give wrong movie name, no problem it will show you the probable movie name and you have to choose from them</strong>.</p>
+
+<p>For windows users they should download the package manually and extract it. Run it on that directory as ::</p>
+
+<pre><code>C:\master&gt; python pysub-dl incredibles english
+</code></pre>
+
+<p><strong>Press [Ctrl] + c or [Ctrl] + d to exit immediately.</strong></p>
+
+<h2>
+<a name="reporting-bugs" class="anchor" href="#reporting-bugs"><span class="octicon octicon-link"></span></a>Reporting Bugs</h2>
+
+<p>Please report bugs at github issue tracker: <a href="https://github.com/iamsudip/pysub-dl/issues">https://github.com/iamsudip/pysub-dl/issues</a></p>
+
+<h2>
+<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p>iamsudip <a href="mailto:iamsudip@programmer.net">iamsudip@programmer.net</a></p>
+
+<ul>
+<li><a href="http://github.com/iamsudip">http://github.com/iamsudip</a></li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
