@@ -20,13 +20,13 @@ except ImportError:
     requirements.append('requests')
 
 setup(name = 'pysub-dl',
-    version = '0.2.6',
+    version = '0.2.7',
     description = "Script to download movie subtitles automatically",
     long_description = long_description,
     platforms = ["Linux"],
     author = "iamsudip",
     author_email = "iamsudip@programmer.net",
-    url = "https://github.com/iamsudip/pysub-dl",
+    url = "http://iamsudip.github.io/pysub-dl",
     license = "MIT",
     packages = find_packages(),
     install_requires = requirements,
