@@ -16,3 +16,7 @@ v0.2.5
 v0.2.6
 ------
 * Organised argparser code. pushed the code to main.
+
+v0.2.7
+------
+* Added verbose downloader.
