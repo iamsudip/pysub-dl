@@ -63,6 +63,9 @@ For windows users they should download the package manually and extract it. Run 
 
 **Press [Ctrl] + c or [Ctrl] + d to exit immediately.**
 
+For windows users it is [Ctrl] + z (I think).
+
+
 Reporting Bugs
 --------------
 
