@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.2.7"
+__version__ = "0.2.8"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
 import argparse
 import sys
+from HTMLParser import HTMLParser
 import requests
 from BeautifulSoup import BeautifulSoup
 from download_it import download_file
@@ -54,10 +55,11 @@ def alternate_search():
     response = requests.get(url)
     soup = BeautifulSoup(response.text)
     del response
+    parser = HTMLParser()
     counter = 1
     for popular in soup.findAll('div', attrs={'class' : 'title'}):
         for link in popular.findAll('a'):
-            movie_list[link.text] = 'http://subscene.com' + link.get('href') + '/' + args.language
+            movie_list[parser.unescape(link.text)] = 'http://subscene.com' + link.get('href') + '/' + args.language
     for key in movie_list.keys():
         print str(counter) + ". " + key
         temp[counter] = key
