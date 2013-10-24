@@ -24,3 +24,7 @@ v0.2.7
 v0.2.8
 ------
 * Fixed bug: converted string 'xmlcharrefreplace' to 'utf-8' encoding.
+
+v0.2.9
+------
+* Added support for python >= 2.3
