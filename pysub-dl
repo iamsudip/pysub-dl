@@ -54,13 +54,16 @@ def alternate_search():
     url = 'http://subscene.com/subtitles/title.aspx?q=' + args.movie
     response = requests.get(url)
     soup = BeautifulSoup(response.text)
+    del response
     parser = HTMLParser()
+    counter = 1
     for popular in soup.findAll('div', attrs={'class' : 'title'}):
         for link in popular.findAll('a'):
             movie_list[parser.unescape(link.text)] = 'http://subscene.com' + link.get('href') + '/' + args.language
-    for num, key in enumerate(movie_list.keys()):
-        print str(num+1) + ". " + key
-        temp[num+1] = key
+    for key in movie_list.keys():
+        print str(counter) + ". " + key
+        temp[counter] = key
+        counter += 1
     alternate_search_choice_handler(prompt2())
 
 
@@ -72,6 +75,7 @@ def down_link(link):
     '''
     response = requests.get(link)
     soup = BeautifulSoup(response.text)
+    del response
     for subs in soup.findAll('div', attrs={'class' : 'download'}):
         for link in subs.findAll('a'):
             user_response = download_file('http://subscene.com' + link.get('href'))
@@ -185,12 +189,20 @@ def search_sub(link):
         print "Sorry! Please choose movie name from the list and enter the corresponding index number."
         alternate_search()
     soup = BeautifulSoup(response.text)
+    del response
+    counter1 = 1
+    counter2 = 1
+    for subs in soup.findAll('td', attrs={'class' : 'a1'}):
+        for link in subs.findAll('a'):
+            data[counter1] = 'http://subscene.com' + link.get('href')
+            counter1 += 1
     print "List of subtitles available at subscene.com"
     for subs in soup.findAll('td', attrs={'class' : 'a1'}):
-        for num, link in enumerate(subs.findAll('a')):
-            data[num+1] = 'http://subscene.com' + link.get('href')
-        for num, movie_name in enumerate(subs.findAll('span')):
-            print str(num+1) + ". Language:" + movie_name.text
+        print str(counter2) + ". Language:",
+        for movie_name in subs.findAll('span'):
+            print movie_name.text
+        counter2 += 1
+
 
 if __name__ == '__main__':
 
