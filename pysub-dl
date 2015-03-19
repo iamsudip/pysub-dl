@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.2.9"
+__version__ = "0.3.0"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
@@ -51,19 +51,19 @@ def alternate_search():
     ''' Prints a list for probable movie names corresponding to the movie name input in case of movie name mismatch.
 
     '''
-    url = 'http://subscene.com/subtitles/title.aspx?q=' + args.movie
+    url = 'http://subscene.com/subtitles/title.aspx?q={movie}'.format(
+            movie=args.movie)
     response = requests.get(url)
     soup = BeautifulSoup(response.text)
     del response
     parser = HTMLParser()
-    counter = 1
     for popular in soup.findAll('div', attrs={'class' : 'title'}):
         for link in popular.findAll('a'):
-            movie_list[parser.unescape(link.text)] = 'http://subscene.com' + link.get('href') + '/' + args.language
-    for key in movie_list.keys():
-        print str(counter) + ". " + key
-        temp[counter] = key
-        counter += 1
+            movie_list[parser.unescape(link.text)] = 'http://subscene.com' + \
+                    link.get('href') + '/' + args.language
+    for num, key in enumerate(movie_list.keys()):
+        print "{counter}. {key}".format(counter=num+1, key=key)
+        temp[num+1] = key
     alternate_search_choice_handler(prompt2())
 
 
@@ -169,13 +169,15 @@ def make_link(movie_name, language=None):
         * subtitle in desired language is not available, then it returns the url using the movie name only.
 
     '''
-    link = 'http://subscene.com/subtitles/%s/%s' %(movie_name, language)
-    response = requests.get(link)
+    link = 'http://subscene.com/subtitles/{movie}/{language}'.format(
+            movie=movie_name, language=language)
+    response = requests.head(link)
     if response.status_code == 200:
         return link
     else:
         print "Wrong input, fixing things hang tight"
-        return 'http://subscene.com/subtitles/%s/' %(movie_name)
+        return 'http://subscene.com/subtitles/{movie}/'.format(
+                movie=movie_name)
 
 
 def search_sub(link):
@@ -190,18 +192,14 @@ def search_sub(link):
         alternate_search()
     soup = BeautifulSoup(response.text)
     del response
-    counter1 = 1
-    counter2 = 1
-    for subs in soup.findAll('td', attrs={'class' : 'a1'}):
+    for num, subs in enumerate(soup.findAll('td', attrs={'class' : 'a1'})):
         for link in subs.findAll('a'):
-            data[counter1] = 'http://subscene.com' + link.get('href')
-            counter1 += 1
+            data[num+1] = 'http://subscene.com' + link.get('href')
     print "List of subtitles available at subscene.com"
-    for subs in soup.findAll('td', attrs={'class' : 'a1'}):
-        print str(counter2) + ". Language:",
+    for num, subs in enumerate(soup.findAll('td', attrs={'class' : 'a1'})):
+        print "{counter}. Language:".format(counter=num+1),
         for movie_name in subs.findAll('span'):
-            print movie_name.text
-        counter2 += 1
+            print "{width}{movie}".format(width=' '*4, movie=movie_name.text)
 
 
 if __name__ == '__main__':
@@ -221,3 +219,4 @@ if __name__ == '__main__':
     except (KeyboardInterrupt, EOFError) as errors:
         print '\nExit'
         sys.exit(0)
+
