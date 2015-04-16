@@ -7,12 +7,8 @@ Subtitle downloader
 
 Actually now it only supports subscene.com to download the subtitles.
 
-It is an early release but works well. So, do not forget to upgrade it frequently.
-
 Installation
 ------------
-
-Now it is a stable release so if you want to install it in your system it requires su/superuser access.
 
 To install the script do this
 

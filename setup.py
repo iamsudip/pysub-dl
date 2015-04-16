@@ -3,7 +3,7 @@
 
 requirements = []
 
-with open('README') as text:
+with open('README.md') as text:
     long_description = text.read()
 
 try:
@@ -24,7 +24,7 @@ except ImportError:
     requirements.append('argparse')
 
 setup(name = 'pysub-dl',
-    version = '0.3.0',
+    version = '0.3.1',
     description = "Script to download movie subtitles automatically",
     long_description = long_description,
     platforms = ["Linux"],

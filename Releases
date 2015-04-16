@@ -1,7 +1,7 @@
 
-========
-Releases
-========
+===============
+Release History
+===============
 
 v0.2.4
 ------
@@ -32,3 +32,7 @@ v0.2.9
 v0.3.0
 ------
 * Refactored code
+
+v.0.3.1
+-------
+* Fixed bug and update doc
