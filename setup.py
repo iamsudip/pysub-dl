@@ -24,7 +24,7 @@ except ImportError:
     requirements.append('argparse')
 
 setup(name = 'pysub-dl',
-    version = '0.3.1',
+    version = '0.3.3',
     description = "Script to download movie subtitles automatically",
     long_description = long_description,
     platforms = ["Linux"],

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __appname__ = "pysub-dl"
-__version__ = "0.3.1"
+__version__ = "0.3.3"
 __author__ = "iamsudip <iamsudip@programmer.net>"
 __license__ = "MIT"
 
@@ -62,7 +62,7 @@ def alternate_search():
             movie_list[parser.unescape(link.text)] = 'http://subscene.com' + \
                     link.get('href') + '/' + args.language
     for num, key in enumerate(movie_list.keys()):
-        print "{counter}. {key}".format(counter=num+1, key=key)
+        print "{counter}. {key}".format(counter=num+1, key=key.encode('ascii', 'ignore'))
         temp[num+1] = key
     alternate_search_choice_handler(prompt2())
 
@@ -199,7 +199,7 @@ def search_sub(link):
     for num, subs in enumerate(soup.findAll('td', attrs={'class' : 'a1'})):
         print "{counter}. Language:".format(counter=num+1),
         for movie_name in subs.findAll('span'):
-            print "{width}{movie}".format(width=' '*4, movie=movie_name.text)
+            print "{width}{movie}".format(width=' '*4, movie=movie_name.text.encode('ascii', 'ignore'))
 
 
 if __name__ == '__main__':
